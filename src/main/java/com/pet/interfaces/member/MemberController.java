@@ -22,4 +22,10 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+
+    @PostMapping("/v1/member/signIn")
+    public ResponseEntity<Void> signIn(@RequestBody SignUpCommand signUpCommand) {
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
