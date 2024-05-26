@@ -19,4 +19,4 @@ RUN ./gradlew build
 
 FROM openjdk:21-bullseye
 COPY --from=0 /app/build/libs/pet-be.jar /app/
-ENTRYPOINT ["java", "-jar", "/app/pet-be.jar", "-Dspring.profiles.active=docker"]
+ENTRYPOINT ["java", "-jar", "/app/pet-be.jar", "-Dspring.profiles.active=prod"]
