@@ -1,9 +1,12 @@
 package com.pet.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pet.application.member.SignInService;
-import com.pet.application.member.filter.CustomJsonUsernamePasswordAuthenticationFilter;
-import com.pet.domain.member.UserRepository;
+import com.pet.application.service.SignInService;
+import com.pet.infrastructure.user.login.CustomJsonUsernamePasswordAuthenticationFilter;
+import com.pet.infrastructure.user.UserRepository;
+import com.pet.infrastructure.user.login.JwtService;
+import com.pet.infrastructure.user.login.LoginFailureHandler;
+import com.pet.infrastructure.user.login.LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,22 +30,6 @@ public class SecurityConfig {
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
 
-    /**
-     * 로그인 성공 시 호출되는 LoginSuccessJWTProviderHandler 빈 등록
-     */
-    @Bean
-    public LoginSuccessHandler loginSuccessHandler() {
-        return new LoginSuccessHandler(jwtService, userRepository);
-    }
-
-    /**
-     * 로그인 실패 시 호출되는 LoginFailureHandler 빈 등록
-     */
-    @Bean
-    public LoginFailureHandler loginFailureHandler() {
-        return new LoginFailureHandler();
-    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -51,7 +38,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorizeRequests ->
                                 authorizeRequests
-                                        .requestMatchers("/", "/v1/member/signUp", "/v1/member/signIn").permitAll()
+                                        .requestMatchers("/", "/signUp", "/signIn").permitAll()
+                                        .requestMatchers("/swagger-ui/**", "/api-docs", "/api-docs/*", "/swagger-resources/**", "/webjars/**").permitAll()
                                         .requestMatchers("/css/**", "/images/**", "/js/**", "/favicon.ico").permitAll()
                                         .anyRequest().authenticated()
                 )
@@ -83,4 +71,22 @@ public class SecurityConfig {
         provider.setUserDetailsService(signInService);
         return new ProviderManager(provider);
     }
+
+
+    /**
+     * 로그인 성공 시 호출되는 LoginSuccessJWTProviderHandler 빈 등록
+     */
+    @Bean
+    public LoginSuccessHandler loginSuccessHandler() {
+        return new LoginSuccessHandler(jwtService, userRepository);
+    }
+
+    /**
+     * 로그인 실패 시 호출되는 LoginFailureHandler 빈 등록
+     */
+    @Bean
+    public LoginFailureHandler loginFailureHandler() {
+        return new LoginFailureHandler();
+    }
+
 }

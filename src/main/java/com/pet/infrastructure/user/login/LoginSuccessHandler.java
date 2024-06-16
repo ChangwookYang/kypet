@@ -1,6 +1,6 @@
-package com.pet.config;
+package com.pet.infrastructure.user.login;
 
-import com.pet.domain.member.UserRepository;
+import com.pet.infrastructure.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

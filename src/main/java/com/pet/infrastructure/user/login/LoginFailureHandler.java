@@ -1,4 +1,4 @@
-package com.pet.config;
+package com.pet.infrastructure.user.login;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

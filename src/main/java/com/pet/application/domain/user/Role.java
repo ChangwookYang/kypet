@@ -1,4 +1,4 @@
-package com.pet.domain.member;
+package com.pet.application.domain.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

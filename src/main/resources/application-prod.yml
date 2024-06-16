@@ -15,9 +15,7 @@ spring:
       hibernate:
         format_sql: false
 
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: info
-        type: info
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
